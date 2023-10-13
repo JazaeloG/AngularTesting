@@ -34,5 +34,6 @@ describe('StddevComponent', () => {
     component.devHoursStdDev = expectedStdDev;
 
     expect(component.devHoursStdDev).toEqual(expectedStdDev);
+    console.log(component.devHoursStdDev);
   });
 });
