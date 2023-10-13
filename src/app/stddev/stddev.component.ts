@@ -18,8 +18,6 @@ export class StddevComponent implements OnInit {
     this.calculateDevHoursStandardDeviation();
   }
 
-  
-
   calculateProxySizeStandardDeviation() {
     this.mediasService.getProxySize().subscribe(data => {
       const mean = calcularMedia(data);
@@ -41,3 +39,4 @@ export class StddevComponent implements OnInit {
     return stdDev;
   }
 }
+
