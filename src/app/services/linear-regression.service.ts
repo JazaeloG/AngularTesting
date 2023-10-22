@@ -22,45 +22,37 @@ export class LinearRegressionService {
     })
   }
 
-  getTest1() : Observable<any> {
-    return this.http.get<any>(this.test1, this.httpOptions)
-    .pipe(
-      retry(1),
+  getTest1(): Observable<any> {
+    return this.http.get<any>(this.test1, this.httpOptions).pipe(
       catchError(this.handleError)
-    )
+    );
   }
 
-  getTest2() : Observable<any> {
-    return this.http.get<any>(this.test2, this.httpOptions)
-    .pipe(
-      retry(1),
+  getTest2(): Observable<any> {
+    return this.http.get<any>(this.test2, this.httpOptions).pipe(
       catchError(this.handleError)
-    )
+    );
   }
 
-  getTest3() : Observable<any> {
-    return this.http.get<any>(this.test3, this.httpOptions)
-    .pipe(
-      retry(1),
+  getTest3(): Observable<any> {
+    return this.http.get<any>(this.test3, this.httpOptions).pipe(
       catchError(this.handleError)
-    )
+    );
   }
 
-  getTest4() : Observable<any> {
-    return this.http.get<any>(this.test4, this.httpOptions)
-    .pipe(
-      retry(1),
+  getTest4(): Observable<any> {
+    return this.http.get<any>(this.test4, this.httpOptions).pipe(
       catchError(this.handleError)
-    )
+    );
   }
 
-  handleError (error: any) {
+  handleError(error: any) {
     let errorMessage = '';
 
-    if(error.error instanceof ErrorEvent) {
+    if (error.error instanceof ErrorEvent) {
       errorMessage = error.error.message;
     } else {
-      errorMessage = 'Error code: ${error.status}\n Message: ${error.message}';
+      errorMessage = `Error code: ${error.status}\nMessage: ${error.message}`;
     }
 
     window.alert(errorMessage);
