@@ -32,14 +32,14 @@ export class SimpsonComponent {
 
   simpson(segmentos: any, fx: any, x0: any, x1: any): number {
     const w = (x1 - x0) / segmentos;
-    let suma = this.calculate.calcularOperacion(fx, x0);
+    let suma = this.calculate.calcularX(fx, x0);
 
     for (let i = 1; i < segmentos; i++) {
       const multiplo = i % 2 === 0 ? 2 : 4;
-      suma += multiplo * this.calculate.calcularOperacion(fx, w * i + x0);
+      suma += multiplo * this.calculate.calcularX(fx, w * i + x0);
     }
 
-    suma += this.calculate.calcularOperacion(fx, x1);
+    suma += this.calculate.calcularX(fx, x1);
     return (w / 3) * suma;
   }
 }
