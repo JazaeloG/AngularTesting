@@ -9,28 +9,26 @@ import { Calculate } from '../operations/calculos';
 export class SimpsonComponent {
   calculate = new Calculate();
 
-  calcularArea(fx: any, x0: number, x1: number, seg: number, error: number): any {
+  calcularAreaSimpson(fx: any, x0: number, x1: number, seg: number, error: number): any {
     let a1 = 0;
     let a2 = 0;
     let c = 1;
-
-    while (a1 === 0 || a2 - a1 > error || a2 === 0) {
+     while (a1 === 0 || a2 - a1 > error || a2 === 0) {
       if (c === 1) {
-        a1 = this.simpson(seg, fx, x0, x1);
+        a1 = this.calculoSimpson(seg, fx, x0, x1);
       } else {
         if (a2 !== 0) {
           a1 = a2;
         }
         seg *= 2;
-        a2 = this.simpson(seg, fx, x0, x1);
+        a2 = this.calculoSimpson(seg, fx, x0, x1);
       }
       c += 1;
     }
-
     return a2;
   }
 
-  simpson(segmentos: any, fx: any, x0: any, x1: any): number {
+  calculoSimpson(segmentos: any, fx: any, x0: any, x1: any): number {
     const w = (x1 - x0) / segmentos;
     let suma = this.calculate.calcularX(fx, x0);
 
