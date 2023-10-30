@@ -29,7 +29,7 @@ export class SimpsonComponent {
     return a2;
   }
   
-  simpson(segmentos: any, fx: any, x0: any, x1: any) {
+  simpson(segmentos: any, fx: any, x0: any, x1: any): number {
     const w = (x1 - x0) / segmentos;
     let suma = this.calculate.calcularOperacion(fx, x0);
     for (let i = 1; i < segmentos; i++) {
