@@ -7,7 +7,6 @@ import { Calculate } from '../operations/calculos';
   styleUrls: ['./simpson.component.css'],
 })
 export class SimpsonComponent {
-
   calculate = new Calculate();
   calcularArea(fx: any, x0: number, x1: number, seg: number, error: number): any {
     
@@ -37,6 +36,5 @@ export class SimpsonComponent {
       suma += multiplo * this.calculate.calcularOperacion(fx, w * i + x0);
     }
     suma += this.calculate.calcularOperacion(fx, x1);
-    return (w / 3) * suma;
-  }
+
 }
