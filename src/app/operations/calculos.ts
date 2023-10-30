@@ -1,3 +1,5 @@
+import { evaluate } from 'mathjs';
+
 export class Calculate {
 
     sumX(lista: number[]): number {
@@ -61,5 +63,15 @@ export class Calculate {
         media = sum / lista.length;
 
         return media;
+    }
+
+    calcularOperacion(operacion:string, x:number){
+        try{
+            const scope={x: x, X:x};
+            const resultado = evaluate(operacion, scope);
+            return resultado;
+        }catch(error){
+            throw error;
+        }
     }
 }
