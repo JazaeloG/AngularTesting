@@ -9,6 +9,7 @@ import { Calculate } from '../operations/calculos';
 export class SimpsonComponent {
   calculate = new Calculate();
 
+
   calcularAreaSimpson(fx: (x: number) => number, x0: number, x1: number, seg: number, error: number): number {
     let a1 = 0;
     let a2 = 0;
@@ -29,7 +30,7 @@ export class SimpsonComponent {
     return a2;
   }
 
-  simpson(fx: (x: number) => number, x0: number, x1: number, seg: number): number {
+simpson(fx: (x: number) => number, x0: number, x1: number, seg: number): number {
     const w = (x1 - x0) / seg;
     let suma = fx(x0) + fx(x1);
 
@@ -40,7 +41,6 @@ export class SimpsonComponent {
 
     return (w / 3) * suma;
   }
-
   
   f2x(x: number): number {
     return 2 * x;
