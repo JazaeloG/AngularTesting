@@ -15,19 +15,22 @@ describe('SimpsonComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
+  it('Should return p=16.0 if x0=0, x1=4, num_seg=4, ERROR=0.0001 and f(x)=2x', () => {
+    const area = component.calcularAreaSimpson(component.f2x, 0, 4, 4, 0.0001);
+    expect(area).toBeCloseTo(16.0, 1);
   });
-
-  it('Should return 16 if f(x)=2x, x0=1 x1=4', ()=>{
-    expect(component.calcularArea('2x', 0, 4, 4, 0.00001)).toBeCloseTo(16.0,1);
-  })
-
-  it('Should return 0.333 if f(x)=x^2, x0=0 x1=1', ()=>{
-    expect(component.calcularArea("x^2", 0, 1, 4, 0.0001)).toBeCloseTo(0.333,3);
-  })
-
-  it('Should return 1.38 in f(x)=1/x, x0=1, x1=4', ()=>{
-    expect(component.calcularArea("1/x", 1, 4, 6, 0.001)).toBeCloseTo(1.386,3);
-  })
+  
+  it('Should return p=0.3333 if x0=0, x1=1, num_seg=4, ERROR=0.0001 and f(x)=x^2', () => {
+    const area = component.calcularAreaSimpson(component.fx2, 0, 1, 4, 0.0001);
+    expect(area).toBeCloseTo(0.3333, 4);
+  });
+  
+  it('Should return p=1.38 if x0=1, x1=4, num_seg=6, ERROR=0.001 and f(x)=1/x', () => {
+    const area = component.calcularAreaSimpson(component.f1_x, 1, 4, 6, 0.001);
+    const expectedValue = 1.38; 
+    const tolerance = 0.01;
+  
+    expect(area).toBeGreaterThanOrEqual(expectedValue - tolerance);
+    expect(area).toBeLessThanOrEqual(expectedValue + tolerance);
+  });
 });

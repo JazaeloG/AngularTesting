@@ -65,13 +65,17 @@ export class Calculate {
         return media;
     }
 
-    calcularOperacion(operacion:string, x:number){
-        try{
-            const scope={x: x, X:x};
-            const resultado = evaluate(operacion, scope);
-            return resultado;
-        }catch(error){
-            throw error;
+    calcularX(operacion: string, x: number): number {
+        try {
+          const resultado = eval(operacion.replace(/X/g, x.toString()));
+          if (isNaN(resultado)) {
+            throw new Error('La expresión no se pudo evaluar correctamente.');
+          }
+          return resultado;
+        } catch (error) {
+          console.error('Error en calcularX:', error);
+          throw error;
         }
-    }
+      }
+      
 }
