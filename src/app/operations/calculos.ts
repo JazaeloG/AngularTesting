@@ -1,6 +1,41 @@
 import { evaluate } from 'mathjs';
 
 export class Calculate {
+  [x: string]: any;
+
+  private b0: number = 0;
+  private b1: number = 0;
+
+  getB0(): number {
+    return this.b0;
+  }
+
+  getB1(): number {
+    return this.b1;
+  }
+
+  setB0B1(b0: number, b1: number): void {
+    this.b0 = b0;
+    this.b1 = b1;
+  }
+  
+  evaluateExpression(expression: string, variables: any): number {
+    const compiled = evaluate(expression);
+    return compiled.evaluate(variables);
+  }
+
+  calcularCorrelacion(listaX: number[], listaY: number[]): number {
+    const mediaX = this.calculateMedia(listaX);
+    const mediaY = this.calculateMedia(listaY);
+
+    const numerator = this.sumXY(listaX, listaY) - listaX.length * mediaX * mediaY;
+    const denominatorX = this.sumXX(listaX) - listaX.length * Math.pow(mediaX, 2);
+    const denominatorY = this.sumXX(listaY) - listaY.length * Math.pow(mediaY, 2);
+
+    const correlation = numerator / Math.sqrt(denominatorX * denominatorY);
+
+    return correlation;
+  }
 
     sumX(lista: number[]): number {
         var sum = 0;
@@ -65,17 +100,25 @@ export class Calculate {
         return media;
     }
 
-    calcularX(operacion: string, x: number): number {
-        try {
-          const resultado = eval(operacion.replace(/X/g, x.toString()));
-          if (isNaN(resultado)) {
-            throw new Error('La expresión no se pudo evaluar correctamente.');
-          }
-          return resultado;
-        } catch (error) {
-          console.error('Error en calcularX:', error);
-          throw error;
+
+
+    calcularGamma(z: number): number {
+      if (Number.isInteger(z)) {
+        let result = 1;
+        for (let i = 1; i < z; i++) {
+          result *= i;
         }
+        return result;
       }
-      
+    
+      let product = Math.sqrt(Math.PI);
+    
+      while (z > 0.5) {
+        z -= 1;
+        product *= z;
+      }
+    
+      return product;
+    }
+    
 }

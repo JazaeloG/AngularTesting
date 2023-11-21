@@ -1,0 +1,18 @@
+<div class="container">
+  <div class="sidebar">
+    <ul>
+      <li>
+        <a [routerLink]="'/desviacion'" [class.active]="activeLink === '/desviacion'">Desviacion Estandar</a>
+      </li>
+      <li>
+        <a [routerLink]="'/linear-regression'" [class.active]="activeLink === '/linear-regression'">Regresion Lineal</a>
+      </li>
+      <li>
+        <a [routerLink]="'/simpson'" [class.active]="activeLink === '/simpson'">Regla de Simpson</a>
+      </li>
+    </ul>
+  </div>
+  <div class="main-content">
+    <router-outlet></router-outlet>
+  </div>
+</div>

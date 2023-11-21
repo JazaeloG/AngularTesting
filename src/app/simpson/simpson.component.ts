@@ -7,50 +7,82 @@ import { Calculate } from '../operations/calculos';
   styleUrls: ['./simpson.component.css'],
 })
 export class SimpsonComponent {
+  funcion: string = '';
+  x0: number = 0;
+  x1: number = 0;
+  numSegmentos: number = 0;
+  dof: number = 0;
+  resultadoSimpson: number | null = null;
+  probabilidadTStudent: number | null = null;
+  activarDof: boolean = false;
+  
   calculate = new Calculate();
 
-
-  calcularAreaSimpson(fx: (x: number) => number, x0: number, x1: number, seg: number, error: number): number {
-    let a1 = 0;
-    let a2 = 0;
-    let c = 1;
-
-    while (a1 === 0 || Math.abs(a2 - a1) > error || a2 === 0) {
-      if (c === 1) {
-        a1 = this.simpson(fx, x0, x1, seg);
-      } else {
-        if (a2 !== 0) {
-          a1 = a2;
-        }
-        seg *= 2;
-        a2 = this.simpson(fx, x0, x1, seg);
-      }
-      c += 1;
-    }
-    return a2;
+  constructor() {
+    this.resultadoSimpson = null;
+    this.probabilidadTStudent = null;
+    this.activarDof = false;
   }
 
-simpson(fx: (x: number) => number, x0: number, x1: number, seg: number): number {
-    const w = (x1 - x0) / seg;
-    let suma = fx(x0) + fx(x1);
-
-    for (let i = 1; i < seg; i++) {
-      const multiplo = i % 2 === 0 ? 2 : 4;
-      suma += multiplo * fx(x0 + i * w);
-    }
-
-    return (w / 3) * suma;
+  calcularSimpson(): void {
+    console.log('Calculando Simpson');
+    console.log('Función:', this.funcion);
+    console.log('X0:', this.x0);
+    console.log('X1:', this.x1);
+    console.log('Num Segmentos:', this.numSegmentos);
+  
+    const funcion = (x: number) => this.evaluarFuncion(this.funcion, x);
+    this.resultadoSimpson = this.simpson(funcion, this.x0, this.x1, this.numSegmentos);
+    console.log('Resultado Simpson:', this.resultadoSimpson);
   }
   
-  f2x(x: number): number {
-    return 2 * x;
+  evaluarFuncion(expresion: string, x: number): number {
+    const partes = expresion.split('*');
+    const coeficiente = parseFloat(partes[0]);
+    return coeficiente * x;
   }
 
-  fx2(x: number): number {
-    return x * x;
+  calcularTStudent(): void {
+    if (this.resultadoSimpson !== null) {
+      this.probabilidadTStudent = this.tProbability(this.resultadoSimpson, this.dof);
+      console.log(`Probabilidad T-Student: ${this.probabilidadTStudent}`);
+    }
   }
 
-  f1_x(x: number): number {
-    return 1 / x;
+  simpson(funcion: (x: number) => number, a: number, b: number, numSegmentos: number): number {
+    let w: number = (b - a) / numSegmentos;
+    let resultado: number = funcion(a) + funcion(b); 
+
+    for (let i = 1; i < numSegmentos; i++) {
+      if (i % 2 === 0) {
+        resultado += 2 * funcion(a + i * w); 
+      } else {
+        resultado += 4 * funcion(a + i * w); 
+      }
+    }
+
+    return (w / 3) * resultado;
+  }
+
+  calcularDistributionTStudent(t: number, dof: number): number {
+    const numerator = this.calculate.calcularGamma((dof + 1) / 2);
+    const denominator = Math.sqrt(dof * Math.PI) * this.calculate.calcularGamma(dof / 2);
+    return (numerator / denominator) * (1 / (1 + t * t / dof) ** ((dof + 1) / 2));
+  }
+
+  tProbability(x: number, dof: number, numSegmentos: number = 100): number {
+    if (this.funcion !== '') {
+      
+      return this.simpson((t) => this.calcularDistributionTStudent(t, dof), 0, x, numSegmentos);
+    } else {
+     
+      return this.calculateDistributionTStudent(x, dof);
+    }
+  }
+
+  calculateDistributionTStudent(t: number, dof: number): number {
+    const numerator = this.calculate.calcularGamma((dof + 1) / 2);
+    const denominator = Math.sqrt(dof * Math.PI) * this.calculate.calcularGamma(dof / 2);
+    return (numerator / denominator) * (1 / (1 + t * t / dof) ** ((dof + 1) / 2));
   }
 }

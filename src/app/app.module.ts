@@ -9,6 +9,8 @@ import { StddevComponent } from './stddev/stddev.component';
 import { LinearRegressionComponent } from './linear-regression/linear-regression.component';
 import { CorrelationComponent } from './correlation/correlation.component';
 import { SimpsonComponent } from './simpson/simpson.component';
+import { UIComponent } from './ui/ui.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -17,12 +19,14 @@ import { SimpsonComponent } from './simpson/simpson.component';
     StddevComponent,
     LinearRegressionComponent,
     CorrelationComponent,
-    SimpsonComponent
+    SimpsonComponent,
+    UIComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule,
   ],
   providers: [MediasService],
   bootstrap: [AppComponent]

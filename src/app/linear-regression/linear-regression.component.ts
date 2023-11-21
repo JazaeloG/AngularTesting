@@ -12,11 +12,15 @@ export class LinearRegressionComponent implements OnInit {
 
   lista1: number[] = [];
   lista2: number[] = [];
+  lista1String: string = '';
+  lista2String: string = '';
   selectedRouteNumber: number = 1;
-
+  inputX: number = 0;
+  calculatedY: number | null = null;
+  correlation: number | null = null;
   sumX = 0;
   sumY = 0;
-  mediaX = 0
+  mediaX = 0;
   mediaY = 0;
   sumXY = 0;
   sumXX = 0;
@@ -60,9 +64,10 @@ export class LinearRegressionComponent implements OnInit {
         });
         break;
       default:
-        console.error('Número de ruta no válido');
+        case 1:
     }
   }
+
   handleDataResponse(data: any): void {
     this.sumX = this.calculate.sumX(this.lista1);
     this.sumY = this.calculate.sumX(this.lista2);
@@ -92,9 +97,33 @@ export class LinearRegressionComponent implements OnInit {
   }
 
   calculateY(x: number): number {
-    var y = 0;
-    y = this.calculate.calculateY(this.calculateB0(), this.calculateB1(), x);
-    return y;
+    return this.calculate.calculateY(this.calculateB0(), this.calculateB1(), x);
+  }
+
+  calcularCorrelacion(): number {
+    return this.calculate.sumXY(this.lista1, this.lista2);
+  }
+  
+  realizarCalculos(): void {
+    this.lista1 = this.lista1String.split(',').map(Number);
+    this.lista2 = this.lista2String.split(',').map(Number);
+
+    this.calculatedY = this.calculate.calculateY(this.calculateB0(), this.calculateB1(), this.inputX);
+    this.calculateB0B1();
+    this.correlation = this.calculate.calcularCorrelacion(this.lista1, this.lista2);
+  }
+
+  private calculateB0B1(): void {
+    const n = this.lista1.length;
+
+    const sumX = this.calculate.sumX(this.lista1);
+    const sumY = this.calculate.sumX(this.lista2);
+    const sumXX = this.calculate.sumXX(this.lista1);
+    const sumXY = this.calculate.sumXY(this.lista1, this.lista2);
+
+    const b1 = this.calculate.calculateB1(sumXY, sumX, sumY, sumXX, n);
+    const b0 = this.calculate.calculateB0(sumX, sumY, b1, n);
+
+    this.calculate.setB0B1(b0, b1);
   }
 }
-

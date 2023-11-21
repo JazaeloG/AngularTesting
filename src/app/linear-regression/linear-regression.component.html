@@ -1,1 +1,22 @@
-<p>linear-regression works!</p>
+<div>
+    <h2>Regresión Lineal</h2>
+  
+    <label for="inputArrayX">Array X:</label>
+    <input type="text" id="inputArrayX" [(ngModel)]="lista1String" placeholder="Ej: 1, 2, 3" />
+  
+    <label for="inputArrayY">Array Y:</label>
+    <input type="text" id="inputArrayY" [(ngModel)]="lista2String" placeholder="Ej: 4, 5, 6" />
+  
+    <label for="inputX">Valor a predecir (X):</label>
+    <input type="number" id="inputX" [(ngModel)]="inputX" />
+  
+    <button (click)="realizarCalculos()">Realizar Cálculos</button>
+  
+    <div *ngIf="calculatedY !== null">
+      <p>Valor Y Calculado: {{ calculatedY }}</p>
+      <p>B0: {{ calculate.getB0() }}</p>
+      <p>B1: {{ calculate.getB1() }}</p>
+      <p>Correlación: {{ correlation }}</p>
+    </div>
+  </div>
+  

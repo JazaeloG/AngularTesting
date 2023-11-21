@@ -1,1 +1,13 @@
-<p>stddev works!</p>
+<div>
+    <h2>Calcular Desviación Estándar</h2>
+    <label for="numeros">Array de Números:</label>
+    <input type="text" id="numeros" [(ngModel)]="numeros" />
+  
+    <button (click)="agregarNumeros()">Agregar</button>
+  
+    <div *ngIf="media !== null">
+      <p>Media: {{ media }}</p>
+      <p>Desviación Estándar: {{ desviacion }}</p>
+    </div>
+  </div>
+  

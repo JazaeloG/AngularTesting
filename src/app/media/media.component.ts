@@ -27,7 +27,3 @@ export class MediaComponent implements OnInit {
   }
 }
 
-export function calcularMedia(data: number[]): number {
-  return data.reduce((acc, val) => acc + val, 0) / data.length;
-}
-
