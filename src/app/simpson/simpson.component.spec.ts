@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 
 import { SimpsonComponent } from './simpson.component';
 import { FormsModule } from '@angular/forms';
@@ -46,4 +46,35 @@ describe('SimpsonComponent', () => {
     const result = component.simpson(t => component.calcularDistributionTStudent(t, 30), 0, 2.750, 100);
     expect(result).toBeCloseTo(0.49500, 5);
   });
+
+  it('should render result when Calculate Simpson button is clicked', fakeAsync(() => {
+    component.funcion = '2*x';
+    component.x0 = 0;
+    component.x1 = 4;
+    component.numSegmentos = 4;
+    component.calcularSimpson();
+
+    tick(); 
+    fixture.detectChanges();
+
+    const resultadoElement = fixture.nativeElement.querySelector('p');
+    expect(resultadoElement.textContent).toContain('Resultado Simpson: 16');
+  }));
+
+
+  it('should update UI when inputs are changed', fakeAsync(() => {
+    const inputFuncion = fixture.nativeElement.querySelector('#inputFuncion');
+    inputFuncion.value = 'x*x';
+    inputFuncion.dispatchEvent(new Event('input'));
+    tick();
+    fixture.detectChanges();
+
+    const button = fixture.nativeElement.querySelector('button');
+    button.click();
+    tick();
+    fixture.detectChanges();
+
+    const resultadoElement = fixture.nativeElement.querySelector('p');
+    expect(resultadoElement.textContent).toContain('Resultado Simpson:');
+  }));
 });
