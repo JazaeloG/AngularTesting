@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { LinearRegressionComponent } from './linear-regression.component';
 import { LinearRegressionService } from '../services/linear-regression.service';
 import { HttpClientModule } from '@angular/common/http';
@@ -125,4 +125,55 @@ describe('LinearRegressionComponent', () => {
     const result = component.calculateY(386);
     expect(result).toBeCloseTo(49.4994, 4);
   });
+
+  it('should calculate and display Y value on button click', fakeAsync(() => {
+    component.lista1String = '1,2,3';
+    component.lista2String = '4,5,6';
+    component.inputX = 2;
+    fixture.detectChanges();
+
+    const buttonElement = fixture.nativeElement.querySelector('button');
+    buttonElement.click();
+    tick();
+    fixture.detectChanges();
+
+    const resultElement = fixture.nativeElement.querySelector('div > p');
+    expect(resultElement.textContent).toContain('Valor Y Calculado');
+  }));
+
+  it('should update B0 and B1 on button click', fakeAsync(() => {
+    component.lista1String = '1,2,3';
+    component.lista2String = '4,5,6';
+    component.inputX = 2;
+    fixture.detectChanges();
+  
+    const buttonElement = fixture.nativeElement.querySelector('button');
+    buttonElement.click();
+    tick();
+    fixture.detectChanges();
+  
+    const b0Element = fixture.nativeElement.querySelector('div p:nth-child(2)');
+    expect(b0Element.textContent).toContain('B0:');
+  
+    const b1Element = fixture.nativeElement.querySelector('div p:nth-child(3)');
+    expect(b1Element.textContent).toContain('B1:');
+  }));
+  
+
+  it('should display correlation value on button click', fakeAsync(() => {
+    component.lista1String = '1,2,3';
+    component.lista2String = '4,5,6';
+    component.inputX = 2;
+    fixture.detectChanges();
+  
+    const buttonElement = fixture.nativeElement.querySelector('button');
+    buttonElement.click();
+    tick();
+    fixture.detectChanges();
+  
+    const correlationElement = fixture.nativeElement.querySelector('div p:last-child');
+    expect(correlationElement.textContent).toContain('Correlación:');
+  }));
+  
+
 });
