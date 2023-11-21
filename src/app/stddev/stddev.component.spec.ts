@@ -2,17 +2,18 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { StddevComponent } from './stddev.component';
 import { MediasService } from '../services/medias.service';
 import { HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
 
 describe('StddevComponent', () => {
   let component: StddevComponent;
   let fixture: ComponentFixture<StddevComponent>;
   let service: MediasService;
 
-  beforeEach(() => {
+  beforeEach(async () => {
     TestBed.configureTestingModule({
       providers: [MediasService],
       declarations: [StddevComponent],
-      imports: [HttpClientModule]
+      imports: [HttpClientModule, FormsModule]
     });
     service = TestBed.inject(MediasService);
     fixture = TestBed.createComponent(StddevComponent);

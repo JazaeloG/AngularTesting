@@ -3,17 +3,18 @@ import { LinearRegressionComponent } from './linear-regression.component';
 import { LinearRegressionService } from '../services/linear-regression.service';
 import { HttpClientModule } from '@angular/common/http';
 import { of } from 'rxjs';
+import { FormsModule } from '@angular/forms';
 
 describe('LinearRegressionComponent', () => {
   let component: LinearRegressionComponent;
   let fixture: ComponentFixture<LinearRegressionComponent>;
   let service: LinearRegressionService;
 
-  beforeEach(() => {
+  beforeEach(async() => {
     TestBed.configureTestingModule({
       declarations: [LinearRegressionComponent],
       providers: [LinearRegressionService],
-      imports: [HttpClientModule]
+      imports: [HttpClientModule, FormsModule]
     });
     fixture = TestBed.createComponent(LinearRegressionComponent);
     component = fixture.componentInstance;

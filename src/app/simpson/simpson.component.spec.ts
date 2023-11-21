@@ -1,14 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SimpsonComponent } from './simpson.component';
+import { FormsModule } from '@angular/forms';
 
 describe('SimpsonComponent', () => {
   let component: SimpsonComponent;
   let fixture: ComponentFixture<SimpsonComponent>;
 
-  beforeEach(() => {
+  beforeEach(async () => {
     TestBed.configureTestingModule({
-      declarations: [SimpsonComponent]
+      declarations: [SimpsonComponent],
+      imports: [FormsModule],
     });
     fixture = TestBed.createComponent(SimpsonComponent);
     component = fixture.componentInstance;

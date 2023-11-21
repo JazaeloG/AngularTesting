@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
-import { retry, catchError } from 'rxjs/operators';
-import { BehaviorSubject } from 'rxjs/';
+import { Observable } from 'rxjs';
+import { retry } from 'rxjs/operators';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class LinearRegressionService {
 
@@ -14,48 +13,36 @@ export class LinearRegressionService {
   test3 = 'https://apidefinitiva-cv-service-jazaelog.cloud.okteto.net/test3';
   test4 = 'https://apidefinitiva-cv-service-jazaelog.cloud.okteto.net/test4';
 
-  constructor(private http: HttpClient) { }
+
+  constructor(private http: HttpClient) {}
 
   httpOptions = {
-    headers : new HttpHeaders({
-      'Content-Type' : 'application/json'
-    })
-  }
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+    }),
+  };
 
   getTest1(): Observable<any> {
-    return this.http.get<any>(this.test1, this.httpOptions).pipe(
-      catchError(this.handleError)
-    );
+    return this.http
+      .get<any>(this.test1, this.httpOptions)
+      .pipe(retry(1));
   }
 
   getTest2(): Observable<any> {
-    return this.http.get<any>(this.test2, this.httpOptions).pipe(
-      catchError(this.handleError)
-    );
+    return this.http
+      .get<any>(this.test2, this.httpOptions)
+      .pipe(retry(1));
   }
 
   getTest3(): Observable<any> {
-    return this.http.get<any>(this.test3, this.httpOptions).pipe(
-      catchError(this.handleError)
-    );
+    return this.http
+      .get<any>(this.test3, this.httpOptions)
+      .pipe(retry(1));
   }
 
   getTest4(): Observable<any> {
-    return this.http.get<any>(this.test4, this.httpOptions).pipe(
-      catchError(this.handleError)
-    );
-  }
-
-  handleError(error: any) {
-    let errorMessage = '';
-
-    if (error.error instanceof ErrorEvent) {
-      errorMessage = error.error.message;
-    } else {
-      errorMessage = `Error code: ${error.status}\nMessage: ${error.message}`;
-    }
-
-    window.alert(errorMessage);
-    return throwError(errorMessage);
+    return this.http
+      .get<any>(this.test4, this.httpOptions)
+      .pipe(retry(1));
   }
 }
