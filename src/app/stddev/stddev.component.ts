@@ -9,11 +9,13 @@ import { MediasService } from '../services/medias.service';
 })
 export class StddevComponent {
   numeros: string = '';
-  media: number | null = null;
+  mediaValue: number | null = null; // Cambiado el nombre de la propiedad para evitar conflicto
   desviacion: number | null = null;
   proxySizeStdDev: number = 0;
   devHoursStdDev: number = 0;
   calculate = new Calculate();
+  myx: number[] = [];
+  result: number | null = null;
 
   constructor(private mediasService: MediasService) {}
 
@@ -24,21 +26,19 @@ export class StddevComponent {
 
   calculateProxySizeStandardDeviation() {
     this.mediasService.getProxySize().subscribe(data => {
-      const mean = this.calculate.calculateMedia(data);
       this.proxySizeStdDev = this.calcularDesviacionEstandar(data);
     });
   }
 
   calculateDevHoursStandardDeviation() {
     this.mediasService.getDevHours().subscribe(data => {
-      const mean = this.calculate.calculateMedia(data);
       this.devHoursStdDev = this.calcularDesviacionEstandar(data);
     });
   }
 
   agregarNumeros() {
     const numerosArray = this.numeros.split(',').map(num => +num.trim());
-    this.media = this.calculate.calculateMedia(numerosArray);
+    this.mediaValue = this.calculate.calculateMedia(numerosArray);
     this.desviacion = this.calcularDesviacionEstandar(numerosArray);
   }
 
@@ -48,5 +48,28 @@ export class StddevComponent {
     const meanOfSquaredDifferences = this.calculate.calculateMedia(squaredDifferences);
     const stdDev = Math.sqrt(meanOfSquaredDifferences);
     return stdDev;
+  }
+
+  agregar() {
+    const numbers = JSON.parse(this.numeros);
+    const isValidArray =
+      Array.isArray(numbers) && numbers.every((num) => !isNaN(Number(num)));
+
+    if (isValidArray) {
+      this.myx = numbers;
+    } else {
+      this.myx = [NaN];
+    }
+  }
+
+  calcularMedia() {
+    const mean = this.calculate.calculateMedia(this.myx);
+    this.result = mean;
+  }
+
+  calcularDesviacion() {
+    const mean = this.calculate.calculateMedia(this.myx);
+    const result = this.calcularDesviacionEstandar(this.myx);
+    this.result = result;
   }
 }
